@@ -1,0 +1,4 @@
+{
+    "port" : 5000,
+    "mongoUri" : "mongodb+srv://Zhadyra:itisNew123!@cluster0.elmleep.mongodb.net/mailServer?retryWrites=true&w=majority"
+}
