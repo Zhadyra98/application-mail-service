@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom'
 
-const EnterPage = () => {
+export default function EnterPage() {
     const [name, setName] = useState('')
     const navigate = useNavigate();
     async function loginUser(event) {
@@ -16,14 +16,13 @@ const EnterPage = () => {
             }),
         })
         const data = await response.json()
-
-        console.log(data);
-        navigate("/messages");
+        localStorage.setItem('userName', data.userName)
+        navigate("/mail");
     }
 
 
     return(
-        <div className="row my-5">
+        <div className=" my-5 container">
             <div className="col text-center input-group">
                 <input 
                     value={name}
@@ -40,5 +39,3 @@ const EnterPage = () => {
         </div>
     )
 }
-
-export default EnterPage
