@@ -9,7 +9,7 @@ export default function MailPage() {
     const [ options, setOptions ] = useState([])
 
     useEffect(() => {
-        const url = 'http://localhost:1337/api/login';
+        const url = 'https://email-system-app.herokuapp.com/api/login';
         const getAllRecipientsList = async() => {
             const req = await fetch(url,{
                 headers: {
@@ -18,13 +18,15 @@ export default function MailPage() {
             });
             const data = await req.json()
             if(data.status === 'ok'){ 
-                console.log(data.recipients);
                 setOptions(data.recipients.map((item) => ({ value: item.name, label: item.name })));
             }
         };
         getAllRecipientsList();
         const comInterval = setInterval(getAllRecipientsList, 5000);
-        return () => clearInterval(comInterval)
+        return () => {
+            clearInterval(comInterval)
+            localStorage.removeItem('userName')
+        }
     }, [] ); 
 
     const sendMail = async (event) => {
@@ -32,7 +34,7 @@ export default function MailPage() {
         let from = localStorage.getItem('userName');
         let recipients = selectedOption.map(item => item.value)
         if(recipients && title && message ){
-            const response = await fetch('http://localhost:1337/api/mail', {
+            const response = await fetch('https://email-system-app.herokuapp.com/api/mail', {
                 method: 'POST', 
                 headers: {
                     'Content-Type': 'application/json',

@@ -4,7 +4,7 @@ import MessageItem from './MessageItem';
 export default function MessageList() {
     const [ messages, setMessages ] = useState([]);
     useEffect(() => {
-        const url = 'http://localhost:1337/api/mail';
+        const url = 'https://email-system-app.herokuapp.com/api/mail';
         const fetchData = async() => {
             const req = await fetch(url,{
                 headers: {

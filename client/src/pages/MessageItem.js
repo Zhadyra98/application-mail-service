@@ -7,9 +7,8 @@ export default function MessageItem({title , from , message , id , isRead}){
         setModal(!modal)
     }
     const openMailHandler = async (e) => {
-        console.log(id)
         e.preventDefault();
-        const response = await fetch('http://localhost:1337/api/mail',{
+        const response = await fetch('https://email-system-app.herokuapp.com/api/mail',{
             method: 'PUT', 
             headers: {
                 'Content-Type': 'application/json',

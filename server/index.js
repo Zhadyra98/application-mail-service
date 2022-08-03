@@ -8,7 +8,16 @@ const Mail = require('./models/mail.model')
 app.use(cors())
 app.use(express.json())
 
-mongoose.connect('mongodb://localhost:27017/mail-system')
+mongoose.connect('mongodb+srv://Zhadyra:itisNew123!@cluster0.elmleep.mongodb.net/?retryWrites=true&w=majority')
+    .then(() => app.listen(process.env.PORT || 1337, () => {
+        console.log('Server is running')
+    }))
+    .catch((err) => console.log(err))
+
+
+app.get("/", (req, res) => {
+    res.send("Welcome to our app ....")
+})
 
 app.post('/api/login', async (req, res) => {
     try {
@@ -75,9 +84,4 @@ app.put('/api/mail', async (req, res) => {
     } catch (err) {
         res.json({ status: 'error', error: 'Something went wrong'})
     }
-})
-
-app.listen(1337 , () => {
-    console.log('Server is running on 1337');
-    
 })
