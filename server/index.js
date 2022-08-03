@@ -27,15 +27,26 @@ app.post('/api/login', async (req, res) => {
     }
 })
 
+app.get('/api/login', async (req, res) => {
+    try {
+        const allUsers = await User.find({}, 'name');
+        res.json({status: 'ok', recipients: allUsers})
+    } catch(error) {
+        res.json({status: 'error'})
+    }
+})
+
 app.post('/api/mail', async (req, res) => {
     try {
-        const mail = await Mail.create({
-            from: req.body.from,
-            recipient: req.body.recipient,
-            title: req.body.title,
-            message: req.body.message,
-        })
-        res.json({ status: 'ok', msgs:'Mail sent'  });
+        await req.body.recipients.forEach(element => {
+            Mail.create({
+                from: req.body.from,
+                recipient: element,
+                title: req.body.title,
+                message: req.body.message,
+            }) 
+        });
+        res.json({ status: 'ok', msgs:'Mails sent'  });
     } catch (err) {
         res.json({ status: 'error', error: 'Something went wrong'})
     }

@@ -13,8 +13,6 @@ export default function MessageList() {
             });
             const data = await req.json()
             if(data.status === 'ok'){ 
-                console.log(data.messages);
-                
                 setMessages(data.messages)
             }
         };
@@ -22,23 +20,24 @@ export default function MessageList() {
         const comInterval = setInterval(fetchData, 5000);
         return () => clearInterval(comInterval)
     }, [] ); 
-
     return(
         <div className="d-flex justify-content-center "> 
-            <table className = "mailServiceContent" >
-                <tbody>
-                    {[...messages].reverse().map((item) => (
-                        <MessageItem 
-                        key = {item._id}
-                        from={item.from} 
-                        title={item.title} 
-                        message={item.message}
-                        isRead={item.isRead}
-                        id={item._id}
-                        />
-                    ))}
-                </tbody>
-            </table>
+            {(messages.length) ? (
+                <table className = "mailServiceContent" >
+                    <tbody>
+                        {[...messages].reverse().map((item) => (
+                            <MessageItem 
+                            key = {item._id}
+                            from={item.from} 
+                            title={item.title} 
+                            message={item.message}
+                            isRead={item.isRead}
+                            id={item._id}
+                            />
+                        ))}
+                    </tbody>
+                </table>
+                ) : (<h5 className='text-center fw-light'> No incoming emails for you...</h5>) }
         </div>
     )
 }

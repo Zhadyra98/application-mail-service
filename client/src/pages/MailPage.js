@@ -3,46 +3,14 @@ import MessageList from "./MessagesList";
 import Select , { components } from 'react-select';
 
 export default function MailPage() {
-    const [ recipient, setRecipient ] = useState('')
     const [ title, setTitle ] = useState('')
     const [ message, setMessage ] = useState('')
-    const options = [
-        { value: 'chocolate', label: 'Chocolate' },
-        { value: 'strawberry', label: 'Strawberry' },
-        { value: 'vanilla', label: 'Vanilla' },
-    ];
-    const [selectedOption, setSelectedOption] = useState(null);
-    let from = localStorage.getItem('userName');
+    const [ selectedOption, setSelectedOption] = useState(null);
+    const [ options, setOptions ] = useState([])
 
-    const sendMail = async (event) => {
-        event.preventDefault();
-        if(recipient && title && message ){
-            const response = await fetch('http://localhost:1337/api/mail', {
-                method: 'POST', 
-                headers: {
-                    'Content-Type': 'application/json',
-                    },
-                body: JSON.stringify({
-                    from,
-                    recipient,
-                    title,
-                    message,
-                }),
-            })
-            const data = await response.json()
-            if(data.status === 'ok') {
-                setRecipient('')
-                setTitle('')
-                setMessage('')
-            } 
-            else console.log(data.error)
-        }
-        else console.log('One of field is empty');
-    }
-    
     useEffect(() => {
-        const url = 'http://localhost:1337/api/mail';
-        const fetchData = async() => {
+        const url = 'http://localhost:1337/api/login';
+        const getAllRecipientsList = async() => {
             const req = await fetch(url,{
                 headers: {
                     'x-access-token': localStorage.getItem('userName'),
@@ -50,15 +18,42 @@ export default function MailPage() {
             });
             const data = await req.json()
             if(data.status === 'ok'){ 
-                console.log(data.messages);
-                
-                setMessages(data.messages)
+                console.log(data.recipients);
+                setOptions(data.recipients.map((item) => ({ value: item.name, label: item.name })));
             }
         };
-        fetchData();
-        const comInterval = setInterval(fetchData, 5000);
+        getAllRecipientsList();
+        const comInterval = setInterval(getAllRecipientsList, 5000);
         return () => clearInterval(comInterval)
     }, [] ); 
+
+    const sendMail = async (event) => {
+        event.preventDefault();
+        let from = localStorage.getItem('userName');
+        let recipients = selectedOption.map(item => item.value)
+        if(recipients && title && message ){
+            const response = await fetch('http://localhost:1337/api/mail', {
+                method: 'POST', 
+                headers: {
+                    'Content-Type': 'application/json',
+                    },
+                body: JSON.stringify({
+                    from,
+                    recipients,
+                    title,
+                    message,
+                }),
+            })
+            const data = await response.json()
+            if(data.status === 'ok') {
+                setSelectedOption(null)
+                setTitle('')
+                setMessage('')
+            } 
+            else console.log(data.error)
+        }
+        else console.log('One of field is empty');
+    }
 
     const NoOptionsMessage = props => {
         return (
@@ -70,31 +65,20 @@ export default function MailPage() {
 
     return(
         <div className="container">
-            <div className="d-flex justify-content-center my-5">
+            <div className="d-flex justify-content-center mb-3">
                 <form onSubmit={sendMail} className= "mailServiceContent" >
                     <div className="form-group mb-2">
                         <Select
                         defaultValue={selectedOption}
                         onChange={setSelectedOption}
+                        value={selectedOption}
                         options={options}
                         placeholder={"Recipients"}
                         isMulti={true}
                         components={{ NoOptionsMessage }}
                         />
                     </div>
-                    {/* <div className="form-group">
-                        <label htmlFor="exampleFormControlInput1">Recipient Name</label>
-                        <input 
-                            type="text" 
-                            className="form-control" 
-                            id="exampleFormControlInput1" 
-                            placeholder="Enter name"
-                            value={recipient}
-                            onChange={e => setRecipient(e.target.value.trim())}
-                        />
-                    </div> */}
                     <div className="form-group mb-2">
-                        {/* <label htmlFor="exampleInputEmail1">Title</label> */}
                         <input 
                             type="text" 
                             className="form-control" 

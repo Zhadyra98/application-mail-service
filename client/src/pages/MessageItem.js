@@ -32,7 +32,7 @@ export default function MessageItem({title , from , message , id , isRead}){
             <tr 
             className = {"d-flex border border-primary border-opacity-50 p-2 mb-2 rounded bg-primary text-dark  " + (isRead ? "bg-opacity-10 fw-normal" : "bg-opacity-25 fw-bold")}
             onClick={(e) => { openMailHandler(e); toggle();}}>
-                <td className="col-4"><small className="text-muted">From: </small>{from}</td>
+                <td className="col-4"><small className="text-muted">From: </small>{localStorage.getItem('userName') === from ? "ME" : from }</td>
                 <td className="col-8" >{title}</td> 
             </tr>
             <Modal isOpen={modal} toggle={toggle} className="p-4">
@@ -43,7 +43,5 @@ export default function MessageItem({title , from , message , id , isRead}){
                 </ModalBody>
             </Modal>
         </>
-
-
     )
 }

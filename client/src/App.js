@@ -1,11 +1,13 @@
-import React , {useEffect} from "react";
+import React from "react";
 import {BrowserRouter as Router, Route, Navigate, Routes} from 'react-router-dom'
+import Header from "./pages/Header";
 import EnterPage from "./pages/EnterPage"
 import MailPage from "./pages/MailPage"
 
 function App() {
     return (
         <Router>
+            <Header/>
             <Routes>
                 <Route exact path="/" element={<EnterPage />} />
                 <Route exact path="/mail" element={<MailPage />} />

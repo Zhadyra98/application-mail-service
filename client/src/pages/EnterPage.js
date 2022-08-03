@@ -21,29 +21,26 @@ export default function EnterPage() {
     }
 
     return(
-        <div className=" my-5 container">
-            <div className="mailServiceContent col">
-                <input 
-                    value={name}
-                    type="text" 
-                    className="form-control" 
-                    placeholder="Enter name" 
-                    onChange={e => setName(e.target.value)}/>
-                <button 
-                    className="btn btn-primary" 
-                    onClick={loginUser} 
-                    type="button">Enter
-                </button>
+        <>
+            <div className="login-form mx-auto mt-5">
+                <form className="p-4" method="post" onSubmit={loginUser}>
+                    <h3 className="text-center mb-2">Welcome</h3>       
+                    <div className="form-group">
+                        <input 
+                        value={name}
+                        type="text" 
+                        className="form-control border rounded-0" 
+                        placeholder="Name" 
+                        required="required"
+                        onChange={e => setName(e.target.value)}/>
+                    </div>
+                    <div className="form-group">
+                        <button type="submit" 
+                        className="btn btn-primary btn-block fw-bold border rounded-0 mt-2 w-100">Log in</button>
+                    </div>       
+                </form>
             </div>
-            {/* <form className="row g-2">
-                <div className="col-auto">
-                    <label htmlFor="inputPassword2" className="visually-hidden" onChange={e => setName(e.target.value)} value={name} >Name</label>
-                    <input type="text" className="form-control" id="inputPassword2" placeholder="Name"/>
-                </div>
-                <div className="col-auto">
-                    <button type="button" onClick={loginUser} className="btn btn-primary mb-3">Enter</button>
-                </div>
-            </form> */}
-        </div>
+        </>
+
     )
 }
