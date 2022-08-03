@@ -11,3 +11,17 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.mailServiceContent {
+  width: 70%;
+}
+
+@media (max-width: 600px) {
+  .mailServiceContent {
+    width: 100%;
+  }
+}
+
+tr {
+  transition: all 1000ms ease-out;
+}

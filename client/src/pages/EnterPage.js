@@ -20,10 +20,9 @@ export default function EnterPage() {
         navigate("/mail");
     }
 
-
     return(
         <div className=" my-5 container">
-            <div className="col text-center input-group">
+            <div className="mailServiceContent col">
                 <input 
                     value={name}
                     type="text" 
@@ -31,11 +30,20 @@ export default function EnterPage() {
                     placeholder="Enter name" 
                     onChange={e => setName(e.target.value)}/>
                 <button 
-                    className="btn btn-outline-primary" 
+                    className="btn btn-primary" 
                     onClick={loginUser} 
-                    type="button">Go
+                    type="button">Enter
                 </button>
             </div>
+            {/* <form className="row g-2">
+                <div className="col-auto">
+                    <label htmlFor="inputPassword2" className="visually-hidden" onChange={e => setName(e.target.value)} value={name} >Name</label>
+                    <input type="text" className="form-control" id="inputPassword2" placeholder="Name"/>
+                </div>
+                <div className="col-auto">
+                    <button type="button" onClick={loginUser} className="btn btn-primary mb-3">Enter</button>
+                </div>
+            </form> */}
         </div>
     )
 }

@@ -53,9 +53,7 @@ app.get('/api/mail', async (req, res) => {
 })
 
 app.put('/api/mail', async (req, res) => {
-    console.log(req.body.id)
     try {
-        
         const mail = await Mail.findOne({ _id: req.body.id });
         mail.updateOne({isRead: true}, (err) => {
             if (err){

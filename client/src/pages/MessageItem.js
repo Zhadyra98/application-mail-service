@@ -28,11 +28,8 @@ export default function MessageItem({title , from , message , id , isRead}){
         }
     }
     return(
-        
         <>
-        {console.log(isRead)}
             <tr 
-            
             className = {"d-flex border border-primary border-opacity-50 p-2 mb-2 rounded bg-primary text-dark  " + (isRead ? "bg-opacity-10 fw-normal" : "bg-opacity-25 fw-bold")}
             onClick={(e) => { openMailHandler(e); toggle();}}>
                 <td className="col-4"><small className="text-muted">From: </small>{from}</td>
